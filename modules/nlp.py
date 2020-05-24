@@ -31,6 +31,8 @@ class Decorators:
 
 
 class NLP:
+
+
     """ 
     Only operations allowed: 
     1. Deletion of any lowercase alphabet of a
@@ -76,3 +78,25 @@ class NLP:
                 self.min_edit_distance(x[1:], y[1:]) + (lambda a, b: 0 if a[0] == b[0] else substitution_weight)(x, y)
             ))
 
+class Text:
+    def find_and_replace(self, string, substring, replacement, number_of_occurrence):
+        copy_string = string
+        if(number_of_occurrence <= 0):
+            number_of_occurrence = 1
+
+        for i in range(0, number_of_occurrence - 1):
+            index = copy_string.find(substring)
+            if(index == -1):
+                return(False)
+            copy_string = copy_string[:index] + replacement + copy_string[index+len(substring):]
+            
+        
+        # print(copy_string)
+        # print(string)
+        final_index = copy_string.find(substring)
+        if(final_index == -1):
+            return(False)
+        updated_index = copy_string.find(substring) + (number_of_occurrence - 1) * (len(substring) - len(replacement))
+        replaced_string = string[:updated_index] + replacement + copy_string[final_index+len(substring):]
+
+        return(replaced_string)
